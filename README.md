@@ -6,7 +6,7 @@
 
 该项目使用的是vue+electron，所以在使用前需要安装相关插件：
 ```
-npm run electron:serve
+npm install --save-dev
 ```
 
 ## 运行方式
