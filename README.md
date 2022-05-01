@@ -43,4 +43,4 @@ npm run electron:generate-icons
 ### 其他
 1. 该项目将持续更新，也欢迎大家给予意见和建议，先行感谢
 2. 若对您有帮助，可使用微信扫一扫
-![在这里插入图片描述](https://img-blog.csdnimg.cn/dd13955b0bdf405a9dd450e29661e024.png)
+		![在这里插入图片描述](https://img-blog.csdnimg.cn/dd13955b0bdf405a9dd450e29661e024.png)
