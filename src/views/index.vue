@@ -89,6 +89,13 @@
           :class="setting.theme"
         >
           <el-dropdown-item
+            :icon="setting.loginAuto ? 'el-icon-check' : 'el-icon-close'"
+            command="z"
+          >
+            开机自启：{{ setting.loginAuto ? '开' : '关' }}
+          </el-dropdown-item>
+          <el-dropdown-item
+            divided
             icon="el-icon-moon"
             command="a"
           >
@@ -196,7 +203,8 @@ export default {
         this.setting = {
           theme: 'light',
           taskType: 1,
-          taskOverShow: 1
+          taskOverShow: 1,
+          loginAuto: false
         }
       } else {
         if (this.setting.theme === 'dark') {
@@ -263,6 +271,11 @@ export default {
         case 'h':
           // 清除10天前
           this.taskClear(3)
+          break
+        case 'z':
+          // 开机自启
+          this.setting.loginAuto = !this.setting.loginAuto
+          ipcRenderer.send('setSetting', this.setting.loginAuto)
           break
       }
       this.setSetting()

@@ -1,7 +1,8 @@
 'use strict'
 import { app, protocol, BrowserWindow, Tray, Menu, ipcMain, screen, globalShortcut } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
-// import logger from '@/logger'
+import Store from 'electron-store'
+// import logger from './logger'
 const path = require('path')
 const isDevelopment = process.env.VUE_APP_NODE_ENV !== 'production'
 
@@ -15,11 +16,18 @@ let tray = null
 let win = null
 let isEdit = false
 let showNeed = false
+const store = new Store()
 ipcMain.on('isEdit', (event, isEditStatus) => {
   isEdit = isEditStatus
 })
 ipcMain.on('footerhover', () => {
   show()
+})
+// 保存主进程需要的配置
+ipcMain.on('setSetting', (event, data) => {
+  app.setLoginItemSettings({
+    openAtLogin: data
+  })
 })
 // 显示主体框
 function show () {
@@ -59,6 +67,7 @@ function windowHideLeft () {
       global.win.setPosition(10 - size[0], position[1])
       global.win.setHasShadow(false)
       showNeed = false
+      storePostion(10 - size[0], position[1])
       return true
     }
   }
@@ -75,6 +84,7 @@ function windowHideRight () {
       global.win.setPosition(screenSize.width - 10, position[1])
       global.win.setHasShadow(false)
       showNeed = false
+      storePostion(screenSize.width - 10, position[1])
       return true
     }
   }
@@ -90,10 +100,16 @@ function windowHideTop () {
       global.win.setPosition(position[0], 10 - size[1])
       global.win.setHasShadow(false)
       showNeed = false
+      storePostion(position[0], 10 - size[1])
       return true
     }
   }
   return false
+}
+function storePostion (x, y) {
+  store.set('lastPosition', {
+    x: x, y: y
+  })
 }
 function hide () {
   if (!windowHideTop()) {
@@ -136,6 +152,8 @@ async function createWindow () {
   })
   // 窗口移动
   win.on('moved', (e) => {
+    const position = win.getPosition()
+    storePostion(position[0], position[1])
     e.preventDefault()
     if (!windowHideTop()) {
       if (!windowHideLeft()) {
@@ -143,6 +161,11 @@ async function createWindow () {
       }
     }
   })
+  // 创建窗口时获取上次的位置并赋值
+  const position = store.get('lastPosition')
+  if (position) {
+    win.setPosition(position.x, position.y)
+  }
   // 新建托盘
   tray = new Tray(iconPath)
   // 托盘名称
@@ -181,6 +204,7 @@ if (!lock) {
     }
   })
   app.on('ready', async () => {
+    app.setAppUserModelId('SNOTE')
     // 监听快捷键
     globalShortcut.register('Ctrl+0', () => {
       showNeed = !showNeed
