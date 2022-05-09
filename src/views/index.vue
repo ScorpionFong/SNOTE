@@ -46,6 +46,7 @@
                   <div
                     v-if="!item1.is_edit"
                     class="note_text_text_show"
+                    style="white-space: pre-wrap;"
                     @contextmenu.prevent="rightClick(item.id, item1.id, index, index1)"
                   >
                     {{ item1.text }}

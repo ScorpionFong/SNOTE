@@ -2,7 +2,7 @@
 import { app, protocol, BrowserWindow, Tray, Menu, ipcMain, screen, globalShortcut } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import Store from 'electron-store'
-// import logger from './logger'
+
 const path = require('path')
 const isDevelopment = process.env.VUE_APP_NODE_ENV !== 'production'
 
@@ -164,7 +164,7 @@ async function createWindow () {
   // 创建窗口时获取上次的位置并赋值
   const position = store.get('lastPosition')
   if (position) {
-    win.setPosition(position.x, position.y)
+    // win.setPosition(position.x, position.y)
   }
   // 新建托盘
   tray = new Tray(iconPath)
