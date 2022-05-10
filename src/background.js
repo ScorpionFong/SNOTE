@@ -164,7 +164,10 @@ async function createWindow () {
   // 创建窗口时获取上次的位置并赋值
   const position = store.get('lastPosition')
   if (position) {
-    // win.setPosition(position.x, position.y)
+    const { width, height } = screen.getPrimaryDisplay().workAreaSize
+    if (position.x > -300 && position.x < width && position.y > -600 && position.y < height) {
+      win.setPosition(position.x, position.y)
+    }
   }
   // 新建托盘
   tray = new Tray(iconPath)
