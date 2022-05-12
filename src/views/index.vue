@@ -46,7 +46,6 @@
                   <div
                     v-if="!item1.is_edit"
                     class="note_text_text_show"
-                    style="white-space: pre-wrap;"
                     @contextmenu.prevent="rightClick(item.id, item1.id, index, index1)"
                   >
                     {{ item1.text }}
@@ -162,6 +161,7 @@
 </template>
 
 <script>
+import '@/assets/css/base.scss'
 import moment from 'moment'
 import { ipcRenderer } from 'electron'
 
@@ -443,75 +443,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-#page {
-  padding: 10px;
-  margin-bottom: 50px;
-}
-#plus_div {
-  text-align: center;
-}
-#plus_div #plus_button {
-  width: 100%;
-}
-#note_div {
-  margin: 20px auto;
-}
-.note_one {
-  margin-top: 20px;
-}
-.note_date {
-  font-size: 15px;
-}
-.note_text {
-  margin: 15px 0;
-  display: flex;
-  padding: 15px 5px;
-  border-radius: 5px;
-}
-.note_text .note_text_row {
-  margin-left: 10px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-.note_text_row .note_text_text {
-  margin-right: 10px;
-  width: 100%;
-}
-.note_text_text_show{
-  font-size: 13px;
-}
-.note_text_row .note_text_time {
-  width: 28px;
-  font-size: 10px;
-  color: gray;
-}
-#footer {
-  position: fixed;
-  z-index: 999;
-  width: 97%;
-  height: 45px;
-  bottom: 0px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.footer_setting {
-  width: 50px;
-  height: 30px;
-  text-align: center;
-  font-size: 20px;
-  cursor: pointer;
-}
-.back_top {
-  margin-right: 10px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  text-align: center;
-  font-size: 20px;
-  box-shadow: 0 0 6px rgb(0 0 0 / 12%);
-  cursor: pointer;
-}
-</style>
